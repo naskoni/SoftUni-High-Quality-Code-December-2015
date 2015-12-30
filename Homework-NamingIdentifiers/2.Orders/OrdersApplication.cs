@@ -44,12 +44,12 @@ namespace _2.Orders
                     price = allProducts.First(p => p.Id == g.Key).UnitPrice,
                     quantity = g.Sum(p => p.Quantity)
                 })
-                .GroupBy(group => @group.catId)
+                .GroupBy(group => group.catId)
                 .Select(group => new
                 {
                     CategoryName = allCategories.First(
-                        c => c.Id == @group.Key).Name,
-                    TotalQuantity = @group.Sum(g => g.quantity*g.price)
+                        c => c.Id == group.Key).Name,
+                    TotalQuantity = group.Sum(g => g.quantity * g.price)
                 })
                 .OrderByDescending(g => g.TotalQuantity)
                 .First();
@@ -63,8 +63,8 @@ namespace _2.Orders
                 .Select(group => new
                 {
                     Product = allProducts.First(
-                        p => p.Id == @group.Key).Name,
-                    Quantities = @group.Sum(g => g.Quantity)
+                        p => p.Id == group.Key).Name,
+                    Quantities = group.Sum(g => g.Quantity)
                 })
                 .OrderByDescending(q => q.Quantities)
                 .Take(5);
@@ -81,8 +81,8 @@ namespace _2.Orders
                 .Select(group => new
                 {
                     Category = allCategories.First(
-                        c => c.Id == @group.Key).Name,
-                    Count = @group.Count()
+                        c => c.Id == group.Key).Name,
+                    Count = group.Count()
                 })
                 .ToList();
             foreach (var item in numberOfProductsInEachCategory)
